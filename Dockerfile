@@ -5,3 +5,5 @@ COPY . .
 RUN mvn clean install
 
 CMD mvn spring-boot:run
+
+#RUN mvn -B package --file pom.xml

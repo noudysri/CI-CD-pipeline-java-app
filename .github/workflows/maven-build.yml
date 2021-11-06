@@ -1,6 +1,10 @@
 name: Java CI 
 
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -14,9 +18,9 @@ jobs:
       - name: Build docker-compose stack
         run: |
           echo ---Building and starting up docker---
-          docker-compose -f "./<REPO_NAME>/docker-compose.yml" up -d --build
+          docker-compose -f "docker-compose.yml" up -d --build
           echo ---Containers up---
-          sleep 120
+ 
 
       - name: Check running containers
         run: docker ps
@@ -33,9 +37,11 @@ jobs:
         with:
           java-version: 8
       - name: Maven Package
-        run: mvn -B clean package -DskipTests
+        run: |
+          sleep 120
+          mvn -B clean package -DskipTests
       - name: Maven Verify
         run: mvn -B clean verify
       - name: Stop containers
         if: always()
-        run: docker-compose -f "./<REPO_NAME>/docker-compose.yml" down    
+        run: docker-compose -f "docker-compose.yml" down    
