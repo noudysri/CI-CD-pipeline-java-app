@@ -1,19 +1,27 @@
 version: "3.7"
 services:
+  
   mysql-service:
-    image: mysql:5.7
+    image: mysql:latest
+    container_name: mysql-db
     networks:
       - spring-boot-mysql-network
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=database
+    ports:
+      - "3306:3306"
   web-service:
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
     ports:
-      - "4000:4000"
+      - "8084:8084"
+    environment:
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/database?createDatabaseIfNotExist=true
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: 1234
     networks:
       - spring-boot-mysql-network
     depends_on:
