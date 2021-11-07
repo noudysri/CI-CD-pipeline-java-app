@@ -3,6 +3,7 @@ EXPOSE 8084
 WORKDIR /app
 COPY target/spring-boot-mysql-0.0.1-SNAPSHOT.jar .
 ENTRYPOINT [ "java", "-jar", "spring-boot-mysql-0.0.1-SNAPSHOT.jar" ]
+
 # FROM maven:3.8.2-jdk-8
 
 # WORKDIR /app
