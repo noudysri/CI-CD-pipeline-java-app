@@ -2,9 +2,8 @@
 FROM openjdk:8-jdk-alpine as build
 
 WORKDIR /app
-RUN mvn clean install
-COPY mvnw .
-COPY .mvn .mvn
+# COPY mvnw .
+# COPY .mvn .mvn
 COPY pom.xml .
 
 RUN chmod +x ./mvnw
