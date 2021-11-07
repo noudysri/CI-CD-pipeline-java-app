@@ -1,8 +1,14 @@
+
+FROM maven:3.8.2-jdk-8
+
+WORKDIR /app
+COPY . .
+RUN mvn clean install
+
 # Build Stage for Spring boot application image
 FROM openjdk:8-jdk-alpine as build
 
 WORKDIR /app
-RUN mvn clean install
 # COPY mvnw .
 # COPY .mvn .mvn
 COPY pom.xml .
