@@ -1,26 +1,30 @@
-
-FROM maven:3.8.2-jdk-8
-
+FROM openjdk:8-jre-alpine
+EXPOSE 8084
 WORKDIR /app
-COPY . .
-RUN mvn clean install
+COPY target/customer-service-0.0.1-SNAPSHOT.jar .
+ENTRYPOINT [ "java", "-jar", "customer-service-0.0.1-SNAPSHOT.jar" ]
+# FROM maven:3.8.2-jdk-8
+
+# WORKDIR /app
+# COPY . .
+# RUN mvn clean install
 
 # Build Stage for Spring boot application image
-FROM openjdk:8-jdk-alpine as build
+# FROM openjdk:8-jdk-alpine as build
 
-WORKDIR /app
+# WORKDIR /app
 # COPY mvnw .
 # COPY .mvn .mvn
-COPY pom.xml .
+# COPY pom.xml .
 
-RUN chmod +x ./mvnw
-# download the dependency if needed or if the pom file is changed
-RUN ./mvnw dependency:go-offline -B
+# RUN chmod +x ./mvnw
+# # download the dependency if needed or if the pom file is changed
+# RUN ./mvnw dependency:go-offline -B
 
-COPY src src
+# COPY src src
 
-RUN ./mvnw package -DskipTests
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+# RUN ./mvnw package -DskipTests
+# RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 # Production Stage for Spring boot application image
 # FROM openjdk:8-jre-alpine as production
