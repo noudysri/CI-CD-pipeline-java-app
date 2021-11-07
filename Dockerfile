@@ -1,8 +1,8 @@
 FROM openjdk:8-jre-alpine
 EXPOSE 8084
 WORKDIR /app
-COPY target/customer-service-0.0.1-SNAPSHOT.jar .
-ENTRYPOINT [ "java", "-jar", "customer-service-0.0.1-SNAPSHOT.jar" ]
+COPY target/spring-boot-mysq-0.0.1-SNAPSHOT.jar .
+ENTRYPOINT [ "java", "-jar", "spring-boot-mysq-0.0.1-SNAPSHOT.jar" ]
 # FROM maven:3.8.2-jdk-8
 
 # WORKDIR /app
