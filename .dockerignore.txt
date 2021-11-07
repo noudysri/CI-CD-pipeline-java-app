@@ -1,0 +1,4 @@
+ # Now un-exclude jar and the target folder:
+#
+!target
+!spring-boot-mysql-0.0.1-SNAPSHOT.jar
