@@ -19,7 +19,6 @@ jobs:
         run: |
           echo ---Building and starting up docker---
           docker-compose -f docker-compose.yml up -d --build
-          sleep 120 
           echo ---Containers up---
 
       - name: Check running containers
@@ -37,7 +36,9 @@ jobs:
         with:
           java-version: 8
       - name: Maven Verify
-        run: mvn -B clean verify
+        run: |
+            sleep 120 
+            mvn -B clean verify
       - name: Stop containers
         if: always()
         run: docker-compose -f docker-compose.yml down    
