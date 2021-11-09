@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build action
+    name: CI action
     runs-on: ubuntu-latest
     container:
       image: lucasalt/act_base:latest
@@ -23,11 +23,7 @@ jobs:
 
       - name: Check running containers
         run: docker ps
-        
-      - name: Maven Verify
-        run: |
-            sleep 120 
-            mvn -B clean verify
+     
       - name: Stop containers
         if: always()
         run: docker-compose -f docker-compose.yml down    
