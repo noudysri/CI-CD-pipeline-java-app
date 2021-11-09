@@ -18,7 +18,7 @@ jobs:
       - name: Build docker-compose stack
         run: |
           echo ---Building and starting up docker---
-          docker-compose -f docker-compose.yml up -d
+          docker-compose -f docker-compose.yml up -d --build
           sleep 120 
           echo ---Containers up---
 
