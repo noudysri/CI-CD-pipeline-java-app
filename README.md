@@ -6,7 +6,7 @@ Build a complete CI/CD pipeline for Java app with Mysql server using Docker, Doc
   * Write Docker Compose configurations in YAML file
   * Set Spring Boot Docker Compose Environment variables.
   * create Github actions that includes building app and running tests stags (CI part):
-      -  https://github.com/shimaa829/CI-CD-pipeline-for-java-app/actions.
+      -  https://github.com/shimaa829/CI-CD-pipeline-java-app/actions/runs/1441944155
   * use Kubernetes as orchestration technology to deploy the application using this steps:
       - building dockerized image of the application
       - Push the image to dockerHub:
