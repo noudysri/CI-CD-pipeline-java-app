@@ -1,19 +1,54 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  # Stage 1: Build
+  - stage: Build
+    displayName: 'Build Stage'
+    jobs:
+      - job: BuildJob
+        displayName: 'Compile with Maven'
+        steps:
+          # Step 1: Maven build
+          - task: Maven@4
+            inputs:
+              mavenPomFile: 'pom.xml'
+              publishJUnitResults: false
+              javaHomeOption: 'JDKVersion'
+              mavenVersionOption: 'Default'
+              mavenAuthenticateFeed: false
+              effectivePomSkip: false
+              sonarQubeRunAnalysis: false
+              cancelTimeoutInMinutes: 0  # Defaulting to 0 (adjust as needed)
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  # Stage 2: Copy Files
+  - stage: CopyFiles
+    displayName: 'Copy Files Stage'
+    dependsOn: Build  # This stage depends on the successful completion of the Build stage
+    jobs:
+      - job: CopyFilesJob
+        displayName: 'Copy Build Outputs'
+        steps:
+          # Step 1: Copy build output files
+          - task: CopyFiles@2
+            inputs:
+              contents: '**'
+              targetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  # Stage 3: Publish Artifacts
+  - stage: PublishArtifacts
+    displayName: 'Publish Artifacts Stage'
+    dependsOn: CopyFiles  # This stage depends on the successful completion of the CopyFiles stage
+    jobs:
+      - job: PublishJob
+        displayName: 'Publish Build Artifacts'
+        steps:
+          # Step 1: Publish build artifacts
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
