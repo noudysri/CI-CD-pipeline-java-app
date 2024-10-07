@@ -17,12 +17,12 @@ stages:
             inputs:
               mavenPomFile: 'pom.xml'
               publishJUnitResults: false
+              codeCoverageToolOption: 'JaCoCo'
               javaHomeOption: 'JDKVersion'
               mavenVersionOption: 'Default'
               mavenAuthenticateFeed: false
               effectivePomSkip: false
               sonarQubeRunAnalysis: false
-              cancelTimeoutInMinutes: 0  # Defaulting to 0 (adjust as needed)
 
   # Stage 2: Copy Files
   - stage: CopyFiles
